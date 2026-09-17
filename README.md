@@ -14,7 +14,7 @@ curl -fsSL https://tdk-landscape.github.io/install.sh | sh
 
 Latest release:
 
-https://github.com/tdk-landscape/tdk-cli-releases/releases/latest
+https://github.com/tdk-landscape/tdk-cli-releases-public/releases/latest
 
 Current assets:
 
