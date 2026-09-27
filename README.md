@@ -4,6 +4,8 @@ This repository intentionally contains **compiled release assets only**.
 
 The TDK CLI source code is private. GitHub's automatic "Source code" downloads for this repository only contain this README, because this repository is only a public release channel.
 
+The open-source core of the CLI (engine, discovery, and the `tdk` commands) is MIT-licensed at **[tdk-landscape/tdk-cli-core](https://github.com/tdk-landscape/tdk-cli-core)**. File issues there, and ⭐ star it if TDK saves you time.
+
 ## Install
 
 ```sh
