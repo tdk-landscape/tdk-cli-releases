@@ -1,15 +1,23 @@
 # TDK CLI public binaries
 
-This repository intentionally contains **compiled release assets only**.
+This repository is the release channel for prebuilt `tdk` binaries. It holds no source code, only release assets.
 
-The TDK CLI source code is private. GitHub's automatic "Source code" downloads for this repository only contain this README, because this repository is only a public release channel.
+The binaries are compiled from the open-source, MIT-licensed **[tdk-landscape/tdk-cli-core](https://github.com/tdk-landscape/tdk-cli-core)**. The source code, docs, and issue tracker all live there. GitHub's automatic "Source code" downloads on this repository's releases contain only this README and the license, so get the source from tdk-cli-core instead.
 
-The open-source core of the CLI (engine, discovery, and the `tdk` commands) is MIT-licensed at **[tdk-landscape/tdk-cli-core](https://github.com/tdk-landscape/tdk-cli-core)**. File issues there, and ⭐ star it if TDK saves you time.
+⭐ If TDK saves you time, please [star tdk-cli-core](https://github.com/tdk-landscape/tdk-cli-core/stargazers).
 
 ## Install
 
 ```sh
 curl -fsSL https://tdk-landscape.github.io/install.sh | sh
+```
+
+The script downloads the binary for your OS and CPU from the latest release, plus the bundled engine, into `/usr/local/bin` (override with `TDK_INSTALL_DIR`).
+
+Or install from npm instead:
+
+```sh
+npm install -g @tdk-landscape/tdk-cli-core
 ```
 
 ## Download binaries
@@ -18,14 +26,34 @@ Latest release:
 
 https://github.com/tdk-landscape/tdk-cli-releases/releases/latest
 
-Current assets:
+Assets in every release (`<version>` is the release tag, e.g. `v1.3.51`):
 
-- `tdk-cli-v1.1.0-binaries.zip` - all compiled binaries in one zip
 - `tdk-linux-amd64` - Linux x86_64 / AMD64
 - `tdk-linux-arm64` - Linux ARM64 / AArch64
 - `tdk-darwin-amd64` - macOS Intel
 - `tdk-darwin-arm64` - macOS Apple Silicon
-- `checksums.txt` - SHA-256 checksums
+- `tdk-cli-engine.tar.gz` - the bundled engine and templates the binary needs at runtime
+- `tdk-cli-<version>-binaries.zip` - all four binaries, the engine, and `checksums.txt` in one zip
+- `checksums.txt` - SHA-256 checksums of the four binaries
+
+The binaries and `tdk-cli-engine.tar.gz` keep the same name in every release, so you can always get the newest one from `https://github.com/tdk-landscape/tdk-cli-releases/releases/latest/download/<asset>`.
+
+### Manual install
+
+A binary on its own is not enough. It looks for the engine and templates in a `tdk-cli/` folder next to itself; without it, `tdk project` and `tdk up` fail with errors such as "Failed to load template" or "TDK extension not found". Example for Linux x86_64 (make sure `~/.local/bin` is on your `PATH`):
+
+```sh
+base=https://github.com/tdk-landscape/tdk-cli-releases/releases/latest/download
+curl -fsSLO "$base/tdk-linux-amd64"
+curl -fsSLO "$base/tdk-cli-engine.tar.gz"
+curl -fsSLO "$base/checksums.txt"
+sha256sum -c checksums.txt --ignore-missing   # macOS: shasum -a 256 -c checksums.txt --ignore-missing
+
+mkdir -p ~/.local/bin/tdk-cli
+install -m 755 tdk-linux-amd64 ~/.local/bin/tdk
+tar -xzf tdk-cli-engine.tar.gz -C ~/.local/bin/tdk-cli --strip-components=1
+tdk --version
+```
 
 ## Docker Compose
 
@@ -41,4 +69,3 @@ docker compose run --rm tdk tdk project --yes
 Example repo:
 
 https://github.com/tdk-landscape/tdk-docker-compose-example
-
