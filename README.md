@@ -12,7 +12,7 @@ The binaries are compiled from the open-source, MIT-licensed **[tdk-landscape/td
 curl -fsSL https://tdk-landscape.github.io/install.sh | sh
 ```
 
-The script downloads the binary for your OS and CPU from the latest release, plus the bundled engine, into `/usr/local/bin` (override with `TDK_INSTALL_DIR`).
+The script downloads the binary for your OS and CPU from the latest release, plus the bundled engine, verifies them against the release's `checksums.txt`, and installs them into `/usr/local/bin` (override with `TDK_INSTALL_DIR`). `tdk upgrade` does the same check in versions released after v1.3.51.
 
 Or install from npm instead:
 
@@ -34,7 +34,7 @@ Assets in every release (`<version>` is the release tag, e.g. `v1.3.51`):
 - `tdk-darwin-arm64` - macOS Apple Silicon
 - `tdk-cli-engine.tar.gz` - the bundled engine and templates the binary needs at runtime
 - `tdk-cli-<version>-binaries.zip` - all four binaries, the engine, and `checksums.txt` in one zip
-- `checksums.txt` - SHA-256 checksums of the four binaries
+- `checksums.txt` - SHA-256 checksums of the four binaries and, in releases after v1.3.51, `tdk-cli-engine.tar.gz`
 
 The binaries and `tdk-cli-engine.tar.gz` keep the same name in every release, so you can always get the newest one from `https://github.com/tdk-landscape/tdk-cli-releases/releases/latest/download/<asset>`.
 
